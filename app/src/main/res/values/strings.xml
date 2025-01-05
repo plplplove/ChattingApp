@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Chatting App</string>
+    <string name="app_name">Mingle</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+
+    //Sign in
+    <string name="sign_in_greeting">Welcome back!</string>
+    <string name="sign_in_button">Sign in</string>
+    <string name="sign_in_text">- Or sign in with - </string>
+    <string name="sign_in_text_sign_up">Dont have an account? </string>
+
+    //Sign up
+    <string name="sign_up_greeting">Create your account</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="sign_up_text">- Or sign un with - </string>
+    <string name="sign_up_text_sign_ip">Already have an account?</string>
+
 </resources>

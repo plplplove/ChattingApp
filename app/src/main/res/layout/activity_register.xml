@@ -23,7 +23,7 @@
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_in_greeting"
+        android:text="@string/sign_up_greeting"
         android:fontFamily="@font/title"
         android:textColor="@color/dark_purple"
         android:textStyle="bold"
@@ -54,11 +54,11 @@
         android:layout_marginTop="15dp"/>
 
     <Button
-        android:id="@+id/sign_in_button"
+        android:id="@+id/sign_up_button"
         style="@style/SignInButton"
         android:foreground="?attr/selectableItemBackground"
         app:layout_constraintWidth_percent="0.9"
-        android:text="@string/sign_in_button"
+        android:text="@string/sign_up_button"
         app:layout_constraintTop_toBottomOf="@id/password_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,13 +66,13 @@
         />
 
     <TextView
-        android:id="@+id/alt_sign_in_text"
+        android:id="@+id/alt_sign_up_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_in_text"
+        android:text="@string/sign_up_text"
         android:textSize="16sp"
         android:textColor="@color/dark_purple"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_button"
+        app:layout_constraintTop_toBottomOf="@id/sign_up_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="35dp"/>
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintTop_toBottomOf="@id/alt_sign_in_text"
+        app:layout_constraintTop_toBottomOf="@id/alt_sign_up_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp">
@@ -177,18 +177,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in_text_sign_up"
+            android:text="@string/sign_up_text_sign_ip"
             android:textSize="16sp"
             android:layout_marginEnd="5dp"
             android:textColor="@color/dark_purple" />
 
         <TextView
-            android:id="@+id/sign_up_button"
+            android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:text="@string/sign_up_button"
+            android:text="@string/sign_in_button"
             android:textSize="16sp"
             android:textColor="@color/pink" />
 
