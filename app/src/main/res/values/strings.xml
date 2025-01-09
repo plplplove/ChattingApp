@@ -18,4 +18,11 @@
     <string name="sign_up_text">- Or sign un with - </string>
     <string name="sign_up_text_sign_ip">Already have an account?</string>
 
+    //Fill profile
+    <string name="fill_profile_title">Fill your profile</string>
+    <string name="fill_user_fist_name">First Name</string>
+    <string name="fill_user_last_name">Last Name (optionally)</string>
+    <string name="fill_user_phone">Phone</string>
+    <string name="fill_finish">Continue</string>
+
 </resources>

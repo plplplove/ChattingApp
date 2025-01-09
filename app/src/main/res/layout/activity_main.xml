@@ -8,19 +8,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/logo"
+    <LinearLayout
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="0.5"
         android:src="@drawable/sign_in_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="34dp"/>
 
     <TextView
-        android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_greeting"
@@ -28,69 +34,52 @@
         android:textColor="@color/dark_purple"
         android:textStyle="bold"
         android:textSize="31sp"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="30dp"/>
 
     <EditText
-        android:id="@+id/email_input"
+        android:id="@+id/emailInput"
         android:hint="@string/email"
-        style="@style/Input"
+        style="@style/InputStyle"
+        android:inputType="textEmailAddress"
         app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintTop_toBottomOf="@id/welcome_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/password_input"
+        android:id="@+id/passwordInput"
         android:hint="@string/password"
-        style="@style/Input"
+        style="@style/InputStyle"
+        android:inputType="textPassword"
         app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintTop_toBottomOf="@id/email_input"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="15dp"/>
 
     <Button
-        android:id="@+id/sign_in_button"
-        style="@style/SignInButton"
-        android:foreground="?attr/selectableItemBackground"
+        android:id="@+id/signInButton"
+        style="@style/ButtonStyle"
         app:layout_constraintWidth_percent="0.9"
         android:text="@string/sign_in_button"
-        app:layout_constraintTop_toBottomOf="@id/password_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_marginTop="15dp"
         />
 
     <TextView
-        android:id="@+id/alt_sign_in_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in_text"
         android:textSize="16sp"
         android:textColor="@color/dark_purple"
-        app:layout_constraintTop_toBottomOf="@id/sign_in_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="35dp"/>
 
     <LinearLayout
-        android:id="@+id/alt_sign_in"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintTop_toBottomOf="@id/alt_sign_in_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/google_button"
+            android:id="@+id/googleButton"
             android:clickable="true"
+            android:focusable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -131,17 +120,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
-            android:foreground="?attr/selectableItemBackground"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
-                android:id="@+id/facebook_button"
+                android:id="@+id/facebookButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/social_button"
                 android:padding="12dp"
                 android:gravity="center">
 
@@ -168,9 +157,6 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/alt_sign_in"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
         android:layout_marginTop="35dp">
 
@@ -183,15 +169,16 @@
             android:textColor="@color/dark_purple" />
 
         <TextView
-            android:id="@+id/sign_up_button"
+            android:id="@+id/signUpButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
+            android:focusable="true"
             android:text="@string/sign_up_button"
             android:textSize="16sp"
             android:textColor="@color/pink" />
 
+    </LinearLayout>
     </LinearLayout>
 
 
