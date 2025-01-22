@@ -142,7 +142,7 @@ class Register : AppCompatActivity() {
                 if (dbTask.isSuccessful) {
                     Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
                     Log.d("Register", "User data saved successfully under UID: $uid")
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, ChatActivity::class.java))
                     finish()
                 } else {
                     val errorMessage = dbTask.exception?.message ?: "Unknown error"

@@ -57,9 +57,7 @@
             android:text="@string/sign_in_button"
             android:foreground="?attr/selectableItemBackground"
             android:layout_margin="10dp"
-            android:layout_marginTop="15dp"
-            />
-
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -181,6 +179,24 @@
         </LinearLayout>
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading_anim" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

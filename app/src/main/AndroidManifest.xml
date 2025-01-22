@@ -13,9 +13,21 @@
         android:theme="@style/Theme.ChattingApp.MySplash"
         tools:targetApi="31">
         <activity
-            android:name=".Register"
+            android:name=".ChatActivity"
             android:exported="false"
             android:theme="@style/Theme.ChattingApp"/>
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ChattingApp"/>
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ChattingApp"/>
+        <activity
+            android:name=".Register"
+            android:exported="false"
+            android:theme="@style/Theme.ChattingApp" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
