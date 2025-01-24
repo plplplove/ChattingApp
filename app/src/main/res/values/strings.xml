@@ -19,14 +19,18 @@
     <string name="sign_up_text">- Or sign un with - </string>
     <string name="sign_up_text_sign_ip">Already have an account?</string>
 
+    //Menu
+    <string name="menu_user_profile">Profile</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_messages">Messages</string>
+
     //Your profile
     <string name="your_profile_tiitle">Your profile</string>
     <string name="your_profilr_edit">Edit Profile</string>
     <string name="your_profile_log_out">Log Out</string>
 
-    //Menu
-    <string name="menu_user_profile">Profile</string>
-    <string name="menu_search">Search</string>
-    <string name="menu_messages">Messages</string>
+    //Edit profile
+    <string name="edit_profile_title">Edit profile</string>
+
 
 </resources>

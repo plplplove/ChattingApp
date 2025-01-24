@@ -8,13 +8,138 @@
     android:layout_height="match_parent"
     tools:context=".UserProfileActivity">
 
-    <TextView
-        android:layout_width="36dp"
-        android:layout_height="15dp"
-        android:text="profile"
+<ImageView
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="20dp"
+    android:src="@drawable/text_logo"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-    
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_margin="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_profile_tiitle"
+        android:fontFamily="@font/title"
+        android:textColor="@color/dark_purple"
+        android:textSize="25sp"/>
+
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/changeImage"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:src="@drawable/user_photo"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/changeImageButton"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/edit_button"
+                android:layout_margin="20dp"
+                android:layout_gravity="bottom|end"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textSize="17sp"
+                android:textColor="@color/gray"
+                android:layout_marginEnd="30dp"/>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:src="@drawable/line"
+            android:layout_marginBottom="30dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="17sp"
+                android:textColor="@color/gray"
+                android:layout_marginEnd="30dp"/>
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:src="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/logOutButton"
+                android:layout_weight="1"
+                android:background="@drawable/cancel_button"
+                style="@style/EditButton"
+                android:layout_margin="20dp"
+                android:text="@string/your_profile_log_out"/>
+
+            <Button
+                android:id="@+id/editProfileButton"
+                android:layout_weight="1"
+                android:background="@drawable/sign_in_button"
+                style="@style/EditButton"
+                android:layout_margin="20dp"
+                android:text="@string/your_profilr_edit"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationMenu"
         android:layout_width="match_parent"
