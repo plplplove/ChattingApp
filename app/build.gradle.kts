@@ -59,5 +59,5 @@ dependencies {
     implementation (libs.circleimageview)
     implementation(libs.lottie)
     implementation(libs.androidx.core.splashscreen)
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
 }

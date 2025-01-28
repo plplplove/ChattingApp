@@ -14,6 +14,7 @@
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true"
     android:layout_margin="20dp"
+    android:paddingTop="20dp"
     android:src="@drawable/text_logo"/>
 
     <LinearLayout

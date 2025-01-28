@@ -72,6 +72,18 @@ class UserProfileActivity : AppCompatActivity() {
         binder.changeImage.setOnClickListener { openGallery() }
         binder.changeImageButton.setOnClickListener { openGallery() }
 
+        binder.editProfileButton.setOnClickListener {
+            startActivity(Intent(this, EditProfileActivity::class.java))
+        }
+
+        binder.username.setOnClickListener {
+            startActivity(Intent(this, EditProfileActivity::class.java))
+        }
+
+        binder.email.setOnClickListener {
+            startActivity(Intent(this, EditProfileActivity::class.java))
+        }
+
         binder.logOutButton.setOnClickListener {
             auth.signOut()
             startActivity(Intent(this, MainActivity::class.java))

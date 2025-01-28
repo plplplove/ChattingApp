@@ -31,6 +31,9 @@
 
     //Edit profile
     <string name="edit_profile_title">Edit profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="edit_profile_cancel">Cancel</string>
+    <string name="edit_profile_save">Save</string>
 
 
 </resources>
