@@ -41,7 +41,6 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(allUsers) { user ->
-            // Handle user click - you can start a chat or view profile
             Toast.makeText(this, "Clicked on ${user.username}", Toast.LENGTH_SHORT).show()
         }
 
