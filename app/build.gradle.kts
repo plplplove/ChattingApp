@@ -56,8 +56,12 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation ("com.google.firebase:firebase-storage:21.0.1")
+    implementation ("com.google.firebase:firebase-messaging-ktx:24.1.0")
+    implementation ("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation ("com.google.firebase:firebase-auth-ktx:22.3.0")
     implementation (libs.circleimageview)
     implementation(libs.lottie)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.glide)
+    implementation (libs.okhttp)
 }

@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chattingapp.adapter.UserAdapter
 import com.example.chattingapp.databinding.ActivitySearchBinding
+import com.example.chattingapp.model.Chat
 import com.example.chattingapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -41,13 +43,79 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(allUsers) { user ->
-            Toast.makeText(this, "Clicked on ${user.username}", Toast.LENGTH_SHORT).show()
+            Log.d("SearchActivity", "User clicked: ${user.username}")
+            createOrOpenChat(user)
         }
 
         binding.userList.apply {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             adapter = userAdapter
         }
+    }
+
+    private fun createOrOpenChat(otherUser: User) {
+        Log.d("SearchActivity", "Creating/Opening chat with: ${otherUser.username}")
+        val currentUserId = auth.currentUser?.uid ?: return
+        val chatRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            .reference
+            .child("Chats")
+
+        // Check if chat already exists
+        chatRef.orderByChild("participants/$currentUserId")
+            .equalTo(true)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    Log.d("SearchActivity", "Chat query result: ${snapshot.childrenCount} chats found")
+                    var chatId: String? = null
+
+                    // Look for existing chat with these two users
+                    for (chatSnapshot in snapshot.children) {
+                        val chat = chatSnapshot.getValue(Chat::class.java)
+                        if (chat != null && 
+                            chat.participants.containsKey(otherUser.uid) && 
+                            chat.participants.size == 2
+                        ) {
+                            chatId = chatSnapshot.key
+                            Log.d("SearchActivity", "Existing chat found with ID: $chatId")
+                            break
+                        }
+                    }
+
+                    if (chatId == null) {
+                        // Create new chat
+                        chatId = chatRef.push().key ?: return
+                        Log.d("SearchActivity", "Creating new chat with ID: $chatId")
+                        val participants = mapOf(
+                            currentUserId to true,
+                            otherUser.uid to true
+                        )
+                        val newChat = Chat(
+                            chatId = chatId,
+                            participants = participants
+                        )
+                        chatRef.child(chatId).setValue(newChat)
+                    }
+
+                    // Open chat activity
+                    Log.d("SearchActivity", "Starting UserChatActivity with chatId: $chatId")
+                    val intent = Intent(this@SearchActivity, UserChatActivity::class.java).apply {
+                        putExtra("chatId", chatId)
+                        putExtra("otherUserId", otherUser.uid)
+                        putExtra("otherUserName", otherUser.username)
+                        putExtra("otherUserImage", otherUser.profileImageUrl)
+                    }
+                    startActivity(intent)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("SearchActivity", "Error creating chat: ${error.message}")
+                    Toast.makeText(
+                        this@SearchActivity,
+                        "Error creating chat: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 
     private fun setupSearchInput() {

@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/userProfileIcon"
+            android:id="@+id/profileImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/user_photo"
@@ -72,8 +72,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/attach"
-            android:tint="@color/gray"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            app:tint="@color/gray" />
 
         <!-- Поле для вводу -->
         <EditText
@@ -99,6 +99,4 @@
             android:padding="8dp"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
-</RelativeLayout>
-
 </RelativeLayout>

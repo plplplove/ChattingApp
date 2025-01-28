@@ -16,24 +16,25 @@
         android:paddingTop="20dp"
         android:src="@drawable/text_logo"/>
 
+
     <LinearLayout
         android:id="@+id/searchContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
-        android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
         android:background="@drawable/search_background"
+        android:orientation="horizontal"
         android:padding="8dp">
 
         <ImageView
             android:id="@+id/searchIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/search"
             android:layout_gravity="center_vertical"
+            android:src="@drawable/search"
             app:tint="@color/gray" />
 
         <EditText
@@ -41,16 +42,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:hint="Search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:background="@android:color/transparent"
-            android:inputType="text"
-            android:imeOptions="actionSearch"
-            android:textColor="@color/dark_purple"
-            android:maxLines="1" />
+            android:textColor="@color/dark_purple" />
     </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userList"
@@ -60,7 +60,9 @@
         android:layout_above="@id/bottomNavigationMenu"
         android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:focusable="true"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

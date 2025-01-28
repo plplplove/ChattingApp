@@ -1,19 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ChatActivity">
 
     <TextView
-        android:layout_width="36dp"
-        android:layout_height="15dp"
-        android:text="chat"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/title"
+        android:text="Messages"
+        android:textColor="@color/dark_purple"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/title"
+        android:layout_above="@id/bottomNavigationMenu"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/noChatsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No messages yet"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/purple"
+        android:visibility="gone" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationMenu"
@@ -24,12 +58,9 @@
         android:layout_marginBottom="20dp"
         android:layout_margin="10dp"
         android:elevation="2dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         app:menu="@menu/bottom_menu"
         app:itemIconSize="30dp"
         app:itemIconTint="@drawable/item_selector"
-        app:labelVisibilityMode="unlabeled"
-        android:foreground="?attr/selectableItemBackground"/>
+        app:labelVisibilityMode="unlabeled" />
 
 </RelativeLayout>
