@@ -7,5 +7,7 @@ data class ChatPreview(
     val otherUserImage: String = "",
     val lastMessage: String = "",
     val lastMessageTime: Long = 0,
-    val lastMessageSenderId: String = ""
+    val lastMessageSenderId: String = "",
+    val unreadCount: Int = 0,
+    val otherUserOnline: Boolean = false
 )

@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 
-class UserProfileActivity : AppCompatActivity() {
+class UserProfileActivity : BaseActivity() {
     private lateinit var binder: ActivityUserProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference

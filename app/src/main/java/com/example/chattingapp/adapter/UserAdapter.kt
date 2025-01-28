@@ -19,6 +19,12 @@ class UserAdapter(
         fun bind(user: User) {
             binding.username.text = user.username
             
+            // Update online status indicator
+            binding.onlineStatusIndicator.setImageResource(
+                if (user.online) R.drawable.online_status_indicator
+                else R.drawable.offline_status_indicator
+            )
+            
             Glide.with(itemView.context)
                 .load(user.profileImageUrl)
                 .placeholder(R.drawable.user_photo)

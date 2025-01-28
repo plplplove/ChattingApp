@@ -11,10 +11,11 @@ import com.bumptech.glide.Glide
 import com.example.chattingapp.adapter.MessageAdapter
 import com.example.chattingapp.databinding.ActivityUserChatBinding
 import com.example.chattingapp.model.Message
+import com.example.chattingapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class UserChatActivity : AppCompatActivity() {
+class UserChatActivity : BaseActivity() {
     private lateinit var binding: ActivityUserChatBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
@@ -22,6 +23,8 @@ class UserChatActivity : AppCompatActivity() {
     private lateinit var chatId: String
     private lateinit var otherUserId: String
     private var messages = mutableListOf<Message>()
+    private var isActive = false
+    private var userListener: ValueEventListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class UserChatActivity : AppCompatActivity() {
         setupRecyclerView()
         setupMessageSending()
         loadMessages()
+        loadUserData()
     }
 
     private fun setupUI() {
@@ -139,16 +143,49 @@ class UserChatActivity : AppCompatActivity() {
             }
     }
 
+    override fun onResume() {
+        super.onResume()
+        isActive = true
+        markMessagesAsRead()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isActive = false
+    }
+
+    private fun markMessagesAsRead() {
+        val currentUserId = auth.currentUser?.uid ?: return
+        val updates = mutableMapOf<String, Any>()
+
+        for (message in messages) {
+            if (message.senderId != currentUserId && !message.seen) {
+                updates["${message.messageId}/seen"] = true
+            }
+        }
+
+        if (updates.isNotEmpty()) {
+            dbRef.updateChildren(updates)
+        }
+    }
+
     private fun loadMessages() {
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 messages.clear()
+                
                 for (messageSnapshot in snapshot.children) {
                     val message = messageSnapshot.getValue(Message::class.java)
                     if (message != null) {
                         messages.add(message)
                     }
                 }
+
+                // Позначаємо повідомлення як прочитані тільки якщо чат активний
+                if (isActive) {
+                    markMessagesAsRead()
+                }
+
                 messageAdapter.notifyDataSetChanged()
                 if (messages.isNotEmpty()) {
                     binding.messageList.smoothScrollToPosition(messages.size - 1)
@@ -164,5 +201,54 @@ class UserChatActivity : AppCompatActivity() {
                 ).show()
             }
         })
+    }
+
+    private fun loadUserData() {
+        val usersRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            .reference
+            .child("Users")
+
+        // Create and store the listener
+        userListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                user?.let {
+                    binding.userName.text = it.username
+                    
+                    // Update online status indicator
+                    binding.onlineStatusIndicator.setImageResource(
+                        if (it.online) R.drawable.online_status_indicator
+                        else R.drawable.offline_status_indicator
+                    )
+                    
+                    // Load profile image
+                    Glide.with(this@UserChatActivity)
+                        .load(it.profileImageUrl)
+                        .placeholder(R.drawable.user_photo)
+                        .error(R.drawable.user_photo)
+                        .into(binding.profileImage)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("UserChatActivity", "Error loading user data: ${error.message}")
+            }
+        }
+
+        // Attach the listener
+        usersRef.child(otherUserId).addValueEventListener(userListener!!)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        
+        // Remove user listener
+        userListener?.let { listener ->
+            FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+                .reference
+                .child("Users")
+                .child(otherUserId)
+                .removeEventListener(listener)
+        }
     }
 }

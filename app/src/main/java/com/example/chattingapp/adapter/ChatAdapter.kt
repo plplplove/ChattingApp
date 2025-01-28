@@ -23,6 +23,23 @@ class ChatAdapter(
             binding.lastMessage.text = chat.lastMessage
             binding.messageTime.text = formatTime(chat.lastMessageTime)
 
+            // Show unread counter if there are unread messages
+            if (chat.unreadCount > 0) {
+                binding.unreadCounter.apply {
+                    text = chat.unreadCount.toString()
+                    visibility = ViewGroup.VISIBLE
+                }
+            } else {
+                binding.unreadCounter.visibility = ViewGroup.GONE
+            }
+
+            // Update online status indicator
+            android.util.Log.d("ChatAdapter", "User ${chat.otherUserName} online status: ${chat.otherUserOnline}")
+            binding.onlineStatusIndicator.setImageResource(
+                if (chat.otherUserOnline) R.drawable.online_status_indicator
+                else R.drawable.offline_status_indicator
+            )
+
             Glide.with(itemView.context)
                 .load(chat.otherUserImage)
                 .placeholder(R.drawable.user_photo)

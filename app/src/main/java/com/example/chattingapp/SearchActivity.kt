@@ -16,7 +16,7 @@ import com.example.chattingapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
     private lateinit var binding: ActivitySearchBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
