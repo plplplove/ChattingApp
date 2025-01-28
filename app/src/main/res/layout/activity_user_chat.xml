@@ -58,7 +58,6 @@
         </FrameLayout>
     </LinearLayout>
 
-    <!-- Список повідомлень -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageList"
         android:layout_width="match_parent"
@@ -68,7 +67,6 @@
         android:padding="16dp"
         android:clipToPadding="false" />
 
-    <!-- Поле для вводу повідомлення -->
     <LinearLayout
         android:id="@+id/messageInputContainer"
         android:layout_width="match_parent"
@@ -81,7 +79,6 @@
         android:layout_margin="20dp"
         android:elevation="4dp">
 
-        <!-- Кнопка прикріплення -->
         <ImageView
             android:id="@+id/attachButton"
             android:layout_width="24dp"
@@ -90,7 +87,6 @@
             android:layout_gravity="center_vertical"
             app:tint="@color/gray" />
 
-        <!-- Поле для вводу -->
         <EditText
             android:id="@+id/messageInput"
             android:layout_width="0dp"
@@ -104,8 +100,7 @@
             android:textColorHint="@color/gray"
             android:maxLines="3"
             android:inputType="textMultiLine" />
-
-        <!-- Кнопка відправки -->
+        
         <ImageView
             android:id="@+id/sendButton"
             android:layout_width="40dp"

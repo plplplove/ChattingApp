@@ -93,7 +93,6 @@ class ChatActivity : BaseActivity() {
         binding.progressBar.visibility = View.VISIBLE
         binding.noChatsText.visibility = View.GONE
 
-        // Remove existing message listeners
         messageListeners.forEach { (chatId, listener) ->
             messagesRef.child(chatId).removeEventListener(listener)
         }
@@ -118,10 +117,8 @@ class ChatActivity : BaseActivity() {
                         val chat = chatSnapshot.getValue(Chat::class.java) ?: continue
                         val chatId = chatSnapshot.key ?: continue
 
-                        // Find the other user's ID
                         val otherUserId = chat.participants.keys.find { it != currentUserId } ?: continue
 
-                        // Create message listener for this chat
                         val messageListener = object : ValueEventListener {
                             override fun onDataChange(messagesSnapshot: DataSnapshot) {
                                 var unreadCount = 0
@@ -132,7 +129,6 @@ class ChatActivity : BaseActivity() {
                                     }
                                 }
 
-                                // Update unread count in existing chat preview
                                 val existingChatIndex = chatPreviews.indexOfFirst { it.chatId == chatId }
                                 if (existingChatIndex != -1) {
                                     val existingChat = chatPreviews[existingChatIndex]
@@ -146,17 +142,16 @@ class ChatActivity : BaseActivity() {
                             }
                         }
 
-                        // Store and attach the listener
                         messageListeners[chatId] = messageListener
                         messagesRef.child(chatId).addValueEventListener(messageListener)
 
-                        // Get other user's info
+
                         val userListener = object : ValueEventListener {
                             override fun onDataChange(userSnapshot: DataSnapshot) {
                                 val user = userSnapshot.getValue(User::class.java)
                                 Log.d("ChatActivity", "User ${user?.username} data updated: online=${user?.online}")
                                 if (user != null) {
-                                    // Update chat preview with new user data
+
                                     val existingIndex = chatPreviews.indexOfFirst { it.chatId == chatId }
                                     if (existingIndex != -1) {
                                         val existingChat = chatPreviews[existingIndex]
@@ -168,7 +163,6 @@ class ChatActivity : BaseActivity() {
                                         Log.d("ChatActivity", "Updated chat preview for ${user.username}: online=${user.online}")
                                         chatAdapter.updateChats(chatPreviews)
                                     } else {
-                                        // Create new chat preview
                                         messagesRef.child(chatId).get().addOnSuccessListener { messagesSnapshot ->
                                             var unreadCount = 0
                                             for (messageSnapshot in messagesSnapshot.children) {
@@ -195,7 +189,6 @@ class ChatActivity : BaseActivity() {
                                             loadedChats++
                                             
                                             if (loadedChats >= totalChats) {
-                                                // Sort chats by last message time
                                                 chatPreviews.sortByDescending { it.lastMessageTime }
                                                 chatAdapter.updateChats(chatPreviews)
                                                 binding.progressBar.visibility = View.GONE
@@ -214,7 +207,6 @@ class ChatActivity : BaseActivity() {
                             }
                         }
 
-                        // Store and attach the user listener
                         userListeners[otherUserId] = userListener
                         usersRef.child(otherUserId).addValueEventListener(userListener)
                     }
@@ -234,14 +226,12 @@ class ChatActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        
-        // Remove all message listeners
+
         messageListeners.forEach { (chatId, listener) ->
             messagesRef.child(chatId).removeEventListener(listener)
         }
         messageListeners.clear()
 
-        // Remove all user listeners
         userListeners.forEach { (userId, listener) ->
             usersRef.child(userId).removeEventListener(listener)
         }

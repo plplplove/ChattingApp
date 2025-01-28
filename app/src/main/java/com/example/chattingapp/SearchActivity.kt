@@ -60,7 +60,6 @@ class SearchActivity : BaseActivity() {
             .reference
             .child("Chats")
 
-        // Check if chat already exists
         chatRef.orderByChild("participants/$currentUserId")
             .equalTo(true)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -96,7 +95,6 @@ class SearchActivity : BaseActivity() {
                         chatRef.child(chatId).setValue(newChat)
                     }
 
-                    // Open chat activity
                     Log.d("SearchActivity", "Starting UserChatActivity with chatId: $chatId")
                     val intent = Intent(this@SearchActivity, UserChatActivity::class.java).apply {
                         putExtra("chatId", chatId)

@@ -103,7 +103,6 @@ class UserProfileActivity : BaseActivity() {
                 storageRef.putFile(imageUri!!)
                     .addOnProgressListener { taskSnapshot ->
                         val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
-                        // You could add a progress bar here if desired
                     }
                     .continueWithTask { task ->
                         if (!task.isSuccessful) {
@@ -145,13 +144,10 @@ class UserProfileActivity : BaseActivity() {
                     val email = snapshot.child("email").getValue(String::class.java)
                     val profileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
 
-                    // Display username
                     binder.username.text = username ?: "No username"
 
-                    // Display email
                     binder.email.text = email ?: "No email"
 
-                    // Load and display profile image
                     if (!profileImageUrl.isNullOrEmpty()) {
                         Glide.with(this@UserProfileActivity)
                             .load(profileImageUrl)

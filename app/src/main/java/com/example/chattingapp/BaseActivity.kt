@@ -26,21 +26,17 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun updateOnlineStatus(online: Boolean) {
         val currentUserId = auth.currentUser?.uid ?: return
-        
-        // Get current user data and update online status
+
         dbRef.child(currentUserId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val currentUser = snapshot.getValue(User::class.java)
                 if (currentUser != null) {
-                    // Create updated user with new online status
                     val updatedUser = currentUser.copy(online = online)
-                    // Update entire user object
                     dbRef.child(currentUserId).setValue(updatedUser)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle error
             }
         })
     }

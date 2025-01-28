@@ -181,7 +181,6 @@ class UserChatActivity : BaseActivity() {
                     }
                 }
 
-                // Позначаємо повідомлення як прочитані тільки якщо чат активний
                 if (isActive) {
                     markMessagesAsRead()
                 }
@@ -208,20 +207,17 @@ class UserChatActivity : BaseActivity() {
             .reference
             .child("Users")
 
-        // Create and store the listener
         userListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
                 user?.let {
                     binding.userName.text = it.username
-                    
-                    // Update online status indicator
+
                     binding.onlineStatusIndicator.setImageResource(
                         if (it.online) R.drawable.online_status_indicator
                         else R.drawable.offline_status_indicator
                     )
-                    
-                    // Load profile image
+
                     Glide.with(this@UserChatActivity)
                         .load(it.profileImageUrl)
                         .placeholder(R.drawable.user_photo)
@@ -235,14 +231,14 @@ class UserChatActivity : BaseActivity() {
             }
         }
 
-        // Attach the listener
+
         usersRef.child(otherUserId).addValueEventListener(userListener!!)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         
-        // Remove user listener
+
         userListener?.let { listener ->
             FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
                 .reference

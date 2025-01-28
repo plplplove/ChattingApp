@@ -24,7 +24,8 @@
         <activity
             android:name=".ChatActivity"
             android:exported="false"
-            android:theme="@style/Theme.ChattingApp" />
+            android:theme="@style/Theme.ChattingApp"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SearchActivity"
             android:exported="false"
@@ -33,7 +34,8 @@
         <activity
             android:name=".UserProfileActivity"
             android:exported="false"
-            android:theme="@style/Theme.ChattingApp" />
+            android:theme="@style/Theme.ChattingApp"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Register"
             android:exported="false"
