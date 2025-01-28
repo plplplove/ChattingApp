@@ -2,6 +2,7 @@ package com.example.chattingapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,8 @@ class UserChatActivity : AppCompatActivity() {
             .child("Messages")
             .child(chatId)
 
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         setupUI()
         setupRecyclerView()
         setupMessageSending()
@@ -68,6 +71,14 @@ class UserChatActivity : AppCompatActivity() {
                 stackFromEnd = true
             }
             adapter = messageAdapter
+        }
+
+        binding.messageInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.messageList.postDelayed({
+                    binding.messageList.smoothScrollToPosition(messages.size)
+                }, 300)
+            }
         }
     }
 
