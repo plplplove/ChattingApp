@@ -6,7 +6,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfileActivity">
+    tools:context=".UserProfileActivity"
+    android:fitsSystemWindows="true">
 
 <ImageView
     android:layout_width="100dp"

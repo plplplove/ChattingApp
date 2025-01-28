@@ -100,7 +100,7 @@
             android:textColorHint="@color/gray"
             android:maxLines="3"
             android:inputType="textMultiLine" />
-        
+
         <ImageView
             android:id="@+id/sendButton"
             android:layout_width="40dp"

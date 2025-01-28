@@ -6,18 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ChatActivity">
+    tools:context=".ChatActivity"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:paddingTop="20dp"
+        android:src="@drawable/text_logo"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@id/logo"
         android:fontFamily="@font/title"
         android:text="Messages"
         android:textColor="@color/dark_purple"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true" />
+        android:textSize="25sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatList"
