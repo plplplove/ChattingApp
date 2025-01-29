@@ -132,11 +132,13 @@ class SearchActivity : BaseActivity() {
             when (item.itemId) {
                 R.id.messages -> {
                     startActivity(Intent(this, ChatActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     finish()
                     true
                 }
                 R.id.userHome -> {
                     startActivity(Intent(this, UserProfileActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     finish()
                     true
                 }

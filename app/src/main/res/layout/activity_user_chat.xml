@@ -102,6 +102,15 @@
             android:inputType="textMultiLine" />
 
         <ImageView
+            android:id="@+id/microphoneButton"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:src="@drawable/microphone_icon"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            app:tint="@color/purple" />
+
+        <ImageView
             android:id="@+id/sendButton"
             android:layout_width="40dp"
             android:layout_height="40dp"

@@ -50,17 +50,17 @@ class UserProfileActivity : BaseActivity() {
             when (item.itemId) {
                 R.id.search -> {
                     startActivity(Intent(this, SearchActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     finish()
                     true
                 }
                 R.id.messages -> {
                     startActivity(Intent(this, ChatActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     finish()
                     true
                 }
-                R.id.userHome -> {
-                    true
-                }
+                R.id.userHome -> true
                 else -> false
             }
         }

@@ -46,6 +46,29 @@ class UserChatActivity : BaseActivity() {
         auth = FirebaseAuth.getInstance()
         chatId = intent.getStringExtra("chatId") ?: return finish()
         otherUserId = intent.getStringExtra("otherUserId") ?: return finish()
+        val otherUserName = intent.getStringExtra("otherUserName")
+        val otherUserImage = intent.getStringExtra("otherUserImage")
+
+        binding.userName.text = otherUserName
+
+        Glide.with(this)
+            .load(otherUserImage)
+            .placeholder(R.drawable.user_photo)
+            .error(R.drawable.user_photo)
+            .into(binding.profileImage)
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+
+        // Add click listeners for user info
+        binding.profileImage.setOnClickListener {
+            openUserInfo(otherUserId, otherUserName, otherUserImage)
+        }
+        
+        binding.userName.setOnClickListener {
+            openUserInfo(otherUserId, otherUserName, otherUserImage)
+        }
 
         dbRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
             .reference
@@ -384,6 +407,17 @@ class UserChatActivity : BaseActivity() {
         }
 
         usersRef.child(otherUserId).addValueEventListener(userListener!!)
+    }
+
+    private fun openUserInfo(userId: String, username: String?, userImage: String?) {
+        val intent = Intent(this, InformationAboutUserActivity::class.java).apply {
+            putExtra("userId", userId)
+            putExtra("username", username)
+            putExtra("userImage", userImage)
+            putExtra("chatId", chatId)
+        }
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     override fun onResume() {
