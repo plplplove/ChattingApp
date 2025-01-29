@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         loadingContainer = binder.loadingContainer
         lottieAnimationView = binder.lottieAnimationView
-
         
         if (auth.currentUser != null) {
             startActivity(Intent(this, ChatActivity::class.java))

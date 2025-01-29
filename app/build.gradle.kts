@@ -61,6 +61,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation ("com.google.firebase:firebase-auth-ktx:22.3.0")
     implementation ("com.google.firebase:firebase-messaging:24.1.0")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation (libs.circleimageview)
     implementation(libs.lottie)
     implementation(libs.androidx.core.splashscreen)
