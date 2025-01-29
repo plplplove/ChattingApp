@@ -16,7 +16,8 @@ import java.util.*
 
 class MessageAdapter(
     private val messages: List<Message>,
-    private val currentUserId: String
+    private val currentUserId: String,
+    private val onMessageLongClick: (Message) -> Unit
 ) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
@@ -58,6 +59,11 @@ class MessageAdapter(
         private val receivedMessageTime: TextView = itemView.findViewById(R.id.messageTimeReceived)
 
         fun bind(message: Message) {
+            itemView.setOnLongClickListener {
+                onMessageLongClick(message)
+                true
+            }
+
             val isCurrentUser = message.senderId == currentUserId
 
             // Set visibility of message containers

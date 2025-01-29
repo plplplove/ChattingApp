@@ -7,6 +7,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -102,7 +103,9 @@ class UserChatActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView() {
-        messageAdapter = MessageAdapter(messages, auth.currentUser?.uid ?: "")
+        messageAdapter = MessageAdapter(messages, auth.currentUser?.uid ?: "") { message ->
+            showDeleteMessageDialog(message)
+        }
 
         binding.messageList.apply {
             layoutManager = LinearLayoutManager(this@UserChatActivity).apply {
@@ -418,6 +421,37 @@ class UserChatActivity : BaseActivity() {
         }
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    private fun showDeleteMessageDialog(message: Message) {
+        val dialog = android.app.Dialog(this)
+        dialog.setContentView(R.layout.dialog_delete_message)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val yesButton = dialog.findViewById<Button>(R.id.yesButton)
+        val noButton = dialog.findViewById<Button>(R.id.noButton)
+
+        yesButton.setOnClickListener {
+            deleteMessage(message)
+            dialog.dismiss()
+        }
+
+        noButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun deleteMessage(message: Message) {
+        dbRef.child(message.messageId ?: return)
+            .removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Message deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to delete message", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onResume() {
