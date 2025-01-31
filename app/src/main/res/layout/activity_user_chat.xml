@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:background="@drawable/rounded_appbar_background"
         android:gravity="center"
@@ -101,14 +101,6 @@
             android:maxLines="3"
             android:inputType="textMultiLine" />
 
-        <ImageView
-            android:id="@+id/microphoneButton"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:src="@drawable/microphone_icon"
-            android:padding="8dp"
-            android:layout_gravity="center_vertical"
-            app:tint="@color/purple" />
 
         <ImageView
             android:id="@+id/sendButton"

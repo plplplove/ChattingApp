@@ -53,7 +53,6 @@ class Register : AppCompatActivity() {
         loadingContainer = findViewById(R.id.loadingContainer)
         lottieAnimationView = findViewById(R.id.lottieAnimationView)
 
-        // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("547067947014-oshfsh96n93hpea1up9r9a9nnfbbv6e8.apps.googleusercontent.com")
             .requestEmail()

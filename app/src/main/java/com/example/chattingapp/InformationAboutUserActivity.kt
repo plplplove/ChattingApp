@@ -15,20 +15,19 @@ class InformationAboutUserActivity : BaseActivity() {
         binding = ActivityInformationAboutUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get user data from intent
+
         val userId = intent.getStringExtra("userId") ?: return finish()
         val username = intent.getStringExtra("username")
         val userImage = intent.getStringExtra("userImage")
         val chatId = intent.getStringExtra("chatId")
 
-        // Initialize database reference
         dbRef = FirebaseDatabase
             .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
             .reference
             .child("Users")
             .child(userId)
 
-        // Set initial data
+
         binding.username.text = username
         if (!userImage.isNullOrEmpty()) {
             Glide.with(this)
@@ -37,10 +36,10 @@ class InformationAboutUserActivity : BaseActivity() {
                 .into(binding.userImage)
         }
 
-        // Load additional user data (email)
+
         loadUserData()
 
-        // Set up click listeners
+
         binding.backButton.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)

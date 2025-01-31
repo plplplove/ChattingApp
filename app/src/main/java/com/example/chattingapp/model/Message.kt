@@ -6,7 +6,7 @@ data class Message(
     val content: String = "",
     val timestamp: Long = 0,
     val seen: Boolean = false,
-    val type: String = "text", // can be "text", "image", or "file"
-    val fileName: String = "", // for file messages
-    val fileUrl: String = "" // for both image and file messages
+    val type: String = "text",
+    val fileName: String = "",
+    val fileUrl: String = ""
 )

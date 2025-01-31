@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         loadingContainer = binder.loadingContainer
         lottieAnimationView = binder.lottieAnimationView
 
-        // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("547067947014-oshfsh96n93hpea1up9r9a9nnfbbv6e8.apps.googleusercontent.com") // Replace this with your Web Client ID from Firebase Console
             .requestEmail()
@@ -101,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     if (user != null) {
-                        // Save user info to database
                         reference = FirebaseDatabase
                             .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
                             .reference

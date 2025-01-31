@@ -62,7 +62,6 @@ class UserChatActivity : BaseActivity() {
             finish()
         }
 
-        // Add click listeners for user info
         binding.profileImage.setOnClickListener {
             openUserInfo(otherUserId, otherUserName, otherUserImage)
         }
@@ -292,7 +291,6 @@ class UserChatActivity : BaseActivity() {
         dbRef.child(message.messageId).setValue(message)
             .addOnSuccessListener {
                 Log.d("UserChatActivity", "Message sent successfully")
-                // Update last message in chat
                 val chatRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
                     .reference
                     .child("Chats")
@@ -323,13 +321,9 @@ class UserChatActivity : BaseActivity() {
     }
 
     private fun showProgressDialog(message: String) {
-        // Show a progress dialog
-        // You can implement this using your preferred progress indicator
     }
 
     private fun hideProgressDialog() {
-        // Hide the progress dialog
-        // You can implement this using your preferred progress indicator
     }
 
     private fun markMessagesAsRead() {
