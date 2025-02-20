@@ -35,13 +35,13 @@ class ChatActivity : BaseActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        dbRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+        dbRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Chats")
-        usersRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+        usersRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Users")
-        messagesRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+        messagesRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Messages")
 
@@ -119,98 +119,113 @@ class ChatActivity : BaseActivity() {
                         val chat = chatSnapshot.getValue(Chat::class.java) ?: continue
                         val chatId = chatSnapshot.key ?: continue
 
-                        val otherUserId = chat.participants.keys.find { it != currentUserId } ?: continue
+                        // Check if there are any messages in this chat
+                        messagesRef.child(chatId).get().addOnSuccessListener { messagesSnapshot ->
+                            if (!messagesSnapshot.exists() || messagesSnapshot.childrenCount == 0L) {
+                                loadedChats++
+                                if (loadedChats == totalChats) {
+                                    binding.progressBar.visibility = View.GONE
+                                    if (chatPreviews.isEmpty()) {
+                                        binding.noChatsText.visibility = View.VISIBLE
+                                    }
+                                    chatAdapter.updateChats(chatPreviews)
+                                }
+                                return@addOnSuccessListener
+                            }
 
-                        val messageListener = object : ValueEventListener {
-                            override fun onDataChange(messagesSnapshot: DataSnapshot) {
-                                var unreadCount = 0
-                                for (messageSnapshot in messagesSnapshot.children) {
-                                    val message = messageSnapshot.getValue(Message::class.java)
-                                    if (message != null && message.senderId != currentUserId && !message.seen) {
-                                        unreadCount++
+                            val otherUserId = chat.participants.keys.find { it != currentUserId } ?: return@addOnSuccessListener
+
+                            val messageListener = object : ValueEventListener {
+                                override fun onDataChange(messagesSnapshot: DataSnapshot) {
+                                    var unreadCount = 0
+                                    for (messageSnapshot in messagesSnapshot.children) {
+                                        val message = messageSnapshot.getValue(Message::class.java)
+                                        if (message != null && message.senderId != currentUserId && !message.seen) {
+                                            unreadCount++
+                                        }
+                                    }
+
+                                    val existingChatIndex = chatPreviews.indexOfFirst { it.chatId == chatId }
+                                    if (existingChatIndex != -1) {
+                                        val existingChat = chatPreviews[existingChatIndex]
+                                        chatPreviews[existingChatIndex] = existingChat.copy(unreadCount = unreadCount)
+                                        chatAdapter.updateChats(chatPreviews)
                                     }
                                 }
 
-                                val existingChatIndex = chatPreviews.indexOfFirst { it.chatId == chatId }
-                                if (existingChatIndex != -1) {
-                                    val existingChat = chatPreviews[existingChatIndex]
-                                    chatPreviews[existingChatIndex] = existingChat.copy(unreadCount = unreadCount)
-                                    chatAdapter.updateChats(chatPreviews)
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.e("ChatActivity", "Error listening to messages: ${error.message}")
                                 }
                             }
 
-                            override fun onCancelled(error: DatabaseError) {
-                                Log.e("ChatActivity", "Error listening to messages: ${error.message}")
-                            }
-                        }
-
-                        messageListeners[chatId] = messageListener
-                        messagesRef.child(chatId).addValueEventListener(messageListener)
+                            messageListeners[chatId] = messageListener
+                            messagesRef.child(chatId).addValueEventListener(messageListener)
 
 
-                        val userListener = object : ValueEventListener {
-                            override fun onDataChange(userSnapshot: DataSnapshot) {
-                                val user = userSnapshot.getValue(User::class.java)
-                                Log.d("ChatActivity", "User ${user?.username} data updated: online=${user?.online}")
-                                if (user != null) {
+                            val userListener = object : ValueEventListener {
+                                override fun onDataChange(userSnapshot: DataSnapshot) {
+                                    val user = userSnapshot.getValue(User::class.java)
+                                    Log.d("ChatActivity", "User ${user?.username} data updated: online=${user?.online}")
+                                    if (user != null) {
 
-                                    val existingIndex = chatPreviews.indexOfFirst { it.chatId == chatId }
-                                    if (existingIndex != -1) {
-                                        val existingChat = chatPreviews[existingIndex]
-                                        chatPreviews[existingIndex] = existingChat.copy(
-                                            otherUserName = user.username,
-                                            otherUserImage = user.profileImageUrl,
-                                            otherUserOnline = user.online
-                                        )
-                                        Log.d("ChatActivity", "Updated chat preview for ${user.username}: online=${user.online}")
-                                        chatAdapter.updateChats(chatPreviews)
-                                    } else {
-                                        messagesRef.child(chatId).get().addOnSuccessListener { messagesSnapshot ->
-                                            var unreadCount = 0
-                                            for (messageSnapshot in messagesSnapshot.children) {
-                                                val message = messageSnapshot.getValue(Message::class.java)
-                                                if (message != null && message.senderId != currentUserId && !message.seen) {
-                                                    unreadCount++
-                                                }
-                                            }
-
-                                            val chatPreview = ChatPreview(
-                                                chatId = chatId,
-                                                otherUserId = otherUserId,
+                                        val existingIndex = chatPreviews.indexOfFirst { it.chatId == chatId }
+                                        if (existingIndex != -1) {
+                                            val existingChat = chatPreviews[existingIndex]
+                                            chatPreviews[existingIndex] = existingChat.copy(
                                                 otherUserName = user.username,
                                                 otherUserImage = user.profileImageUrl,
-                                                lastMessage = chat.lastMessage,
-                                                lastMessageTime = chat.lastMessageTime,
-                                                lastMessageSenderId = chat.lastMessageSenderId,
-                                                unreadCount = unreadCount,
                                                 otherUserOnline = user.online
                                             )
-                                            Log.d("ChatActivity", "Created new chat preview for ${user.username}: online=${user.online}")
+                                            Log.d("ChatActivity", "Updated chat preview for ${user.username}: online=${user.online}")
+                                            chatAdapter.updateChats(chatPreviews)
+                                        } else {
+                                            messagesRef.child(chatId).get().addOnSuccessListener { messagesSnapshot ->
+                                                var unreadCount = 0
+                                                for (messageSnapshot in messagesSnapshot.children) {
+                                                    val message = messageSnapshot.getValue(Message::class.java)
+                                                    if (message != null && message.senderId != currentUserId && !message.seen) {
+                                                        unreadCount++
+                                                    }
+                                                }
 
-                                            chatPreviews.add(chatPreview)
-                                            loadedChats++
-                                            
-                                            if (loadedChats >= totalChats) {
-                                                chatPreviews.sortByDescending { it.lastMessageTime }
-                                                chatAdapter.updateChats(chatPreviews)
-                                                binding.progressBar.visibility = View.GONE
+                                                val chatPreview = ChatPreview(
+                                                    chatId = chatId,
+                                                    otherUserId = otherUserId,
+                                                    otherUserName = user.username,
+                                                    otherUserImage = user.profileImageUrl,
+                                                    lastMessage = chat.lastMessage,
+                                                    lastMessageTime = chat.lastMessageTime,
+                                                    lastMessageSenderId = chat.lastMessageSenderId,
+                                                    unreadCount = unreadCount,
+                                                    otherUserOnline = user.online
+                                                )
+                                                Log.d("ChatActivity", "Created new chat preview for ${user.username}: online=${user.online}")
+
+                                                chatPreviews.add(chatPreview)
+                                                loadedChats++
+                                                
+                                                if (loadedChats >= totalChats) {
+                                                    chatPreviews.sortByDescending { it.lastMessageTime }
+                                                    chatAdapter.updateChats(chatPreviews)
+                                                    binding.progressBar.visibility = View.GONE
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {
-                                Log.e("ChatActivity", "Error loading user: ${error.message}")
-                                loadedChats++
-                                if (loadedChats >= totalChats) {
-                                    binding.progressBar.visibility = View.GONE
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.e("ChatActivity", "Error loading user: ${error.message}")
+                                    loadedChats++
+                                    if (loadedChats >= totalChats) {
+                                        binding.progressBar.visibility = View.GONE
+                                    }
                                 }
                             }
-                        }
 
-                        userListeners[otherUserId] = userListener
-                        usersRef.child(otherUserId).addValueEventListener(userListener)
+                            userListeners[otherUserId] = userListener
+                            usersRef.child(otherUserId).addValueEventListener(userListener)
+                        }
                     }
                 }
 

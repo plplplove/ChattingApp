@@ -70,7 +70,7 @@ class UserChatActivity : BaseActivity() {
             openUserInfo(otherUserId, otherUserName, otherUserImage)
         }
 
-        dbRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+        dbRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Messages")
             .child(chatId)
@@ -291,7 +291,7 @@ class UserChatActivity : BaseActivity() {
         dbRef.child(message.messageId).setValue(message)
             .addOnSuccessListener {
                 Log.d("UserChatActivity", "Message sent successfully")
-                val chatRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+                val chatRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
                     .reference
                     .child("Chats")
                     .child(chatId)
@@ -375,7 +375,7 @@ class UserChatActivity : BaseActivity() {
     }
 
     private fun loadUserData() {
-        val usersRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+        val usersRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Users")
 
@@ -463,7 +463,7 @@ class UserChatActivity : BaseActivity() {
         super.onDestroy()
 
         userListener?.let { listener ->
-            FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
                 .reference
                 .child("Users")
                 .child(otherUserId)

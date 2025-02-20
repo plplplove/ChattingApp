@@ -41,7 +41,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         reference = FirebaseDatabase
-            .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Users")
             .child(auth.currentUser?.uid ?: "")

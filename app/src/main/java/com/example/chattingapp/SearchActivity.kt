@@ -31,7 +31,7 @@ class SearchActivity : BaseActivity() {
 
         auth = FirebaseAuth.getInstance()
         dbRef = FirebaseDatabase
-            .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Users")
 
@@ -56,7 +56,7 @@ class SearchActivity : BaseActivity() {
     private fun createOrOpenChat(otherUser: User) {
         Log.d("SearchActivity", "Creating/Opening chat with: ${otherUser.username}")
         val currentUserId = auth.currentUser?.uid ?: return
-        val chatRef = FirebaseDatabase.getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+        val chatRef = FirebaseDatabase.getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Chats")
 

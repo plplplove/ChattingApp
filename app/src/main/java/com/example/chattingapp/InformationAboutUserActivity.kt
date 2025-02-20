@@ -22,7 +22,7 @@ class InformationAboutUserActivity : BaseActivity() {
         val chatId = intent.getStringExtra("chatId")
 
         dbRef = FirebaseDatabase
-            .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Users")
             .child(userId)

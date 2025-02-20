@@ -116,7 +116,7 @@ class Register : AppCompatActivity() {
                     if (user != null) {
                         // Save user info to database
                         reference = FirebaseDatabase
-                            .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+                            .getInstance("YOUR_FIREBASE_DATABASE_URL")
                             .reference
                             .child("Users")
                             .child(user.uid)
@@ -204,7 +204,7 @@ class Register : AppCompatActivity() {
 
     private fun saveUserData(uid: String, userName: String, email: String, profileImageUrl: String?) {
         reference = FirebaseDatabase
-            .getInstance("https://chattingapp-d6b91-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getInstance("YOUR_FIREBASE_DATABASE_URL")
             .reference
             .child("Users")
             .child(uid)
